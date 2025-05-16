@@ -74,42 +74,47 @@ namespace Qiniu.Storage
         /// <summary>
         /// 命令
         /// </summary>
-        [JsonProperty("cmd")]
+        [JsonPropertyName("cmd")]
         public string Cmd;
         /// <summary>
         /// 命令执行结果状态码
         /// </summary>
-        [JsonProperty("code")]
+        [JsonPropertyName("code")]
         public string Code;
         /// <summary>
         /// 命令执行结果描述
         /// </summary>
-        [JsonProperty("desc")]
+        [JsonPropertyName("desc")]
         public string Desc;
         /// <summary>
         /// 命令执行错误
         /// </summary>
-        [JsonProperty("Error", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("Error")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Error;
         /// <summary>
         /// VSample命令的生成文件名列表
         /// </summary>
-        [JsonProperty("keys", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("keys")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string[] Keys;
         /// <summary>
         /// 命令生成的文件名
         /// </summary>
-        [JsonProperty("key", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("key")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Key;
         /// <summary>
         /// 命令生成的文件内容hash
         /// </summary>
-        [JsonProperty("hash", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("hash")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Hash;
         /// <summary>
         /// 该命令是否返回了上一次相同命令生成的结果
         /// </summary>
-        [JsonProperty("returnOld", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("returnOld")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? ReturnOld;
     }
 }

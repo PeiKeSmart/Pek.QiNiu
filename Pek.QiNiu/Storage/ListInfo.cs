@@ -39,13 +39,15 @@ namespace Qiniu.Storage
         /// <summary>
         /// 文件列表
         /// </summary>
-        [JsonProperty("items", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("items")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<ListItem> Items { get; set; }
 
         /// <summary>
         /// 公共前缀
         /// </summary>
-        [JsonProperty("commonPrefixes", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("commonPrefixes")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public List<string> CommonPrefixes { get; set; }
     }
 }

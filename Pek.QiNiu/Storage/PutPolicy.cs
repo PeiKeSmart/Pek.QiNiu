@@ -38,122 +38,142 @@ namespace Qiniu.Storage
         /// [可选]saveKey 的优先级设置。为 true 时，saveKey不能为空，会忽略客户端指定的key，强制使用saveKey进行文件命名。
         /// 默认为 false
         /// </summary>
-        [JsonProperty("forceSaveKey", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("forceSaveKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public bool? ForceSaveKey { get; set; }
 
         /// <summary>
         /// [可选]保存文件的key
         /// </summary>
-        [JsonProperty("saveKey", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("saveKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string SaveKey { get; set; }
 
         /// <summary>
         /// [可选]终端用户
         /// </summary>
-        [JsonProperty("endUser", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("endUser")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string EndUser { get; set; }
 
         /// <summary>
         /// [可选]返回URL
         /// </summary>
-        [JsonProperty("returnUrl", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("returnUrl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ReturnUrl { get; set; }
 
         /// <summary>
         /// [可选]返回内容
         /// </summary>
-        [JsonProperty("returnBody", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("returnBody")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string ReturnBody { get; set; }
 
         /// <summary>
         /// [可选]回调URL
         /// </summary>
-        [JsonProperty("callbackUrl", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("callbackUrl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CallbackUrl { get; set; }
 
         /// <summary>
         /// [可选]回调内容
         /// </summary>
-        [JsonProperty("callbackBody", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("callbackBody")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CallbackBody { get; set; }
 
         /// <summary>
         /// [可选]回调内容类型
         /// </summary>
-        [JsonProperty("callbackBodyType", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("callbackBodyType")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CallbackBodyType { get; set; }
 
         /// <summary>
         /// [可选]回调host
         /// </summary>
-        [JsonProperty("callbackHost", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("callbackHost")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string CallbackHost { get; set; }
 
         /// <summary>
         /// [可选]回调fetchkey
         /// </summary>
-        [JsonProperty("callbackFetchKey", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("callbackFetchKey")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? CallbackFetchKey { get; set; }
 
         /// <summary>
         /// [可选]上传预转持久化，与 PersistentWorkflowTemplateId 二选一
         /// </summary>
-        [JsonProperty("persistentOps", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("persistentOps")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string PersistentOps { get; set; }
 
         /// <summary>
         /// [可选]持久化结果通知
         /// </summary>
-        [JsonProperty("persistentNotifyUrl", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("persistentNotifyUrl")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string PersistentNotifyUrl { get; set; }
 
         /// <summary>
         /// [可选]私有队列
         /// </summary>
-        [JsonProperty("persistentPipeline", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("persistentPipeline")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string PersistentPipeline { get; set; }
 
         /// <summary>
         /// [可选]持久化任务类型，为 1 时开启闲时任务
         /// </summary>
-        [JsonProperty("persistentType", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("persistentType")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? PersistentType { get; set; }
 
         /// <summary>
         /// [可选]任务模版，与 PersistentOps 二选一
         /// </summary>
-        [JsonProperty("persistentWorkflowTemplateID", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("persistentWorkflowTemplateID")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string PersistentWorkflowTemplateId { get; set; }
 
 
         /// <summary>
         /// [可选]上传文件大小限制：最小值，单位Byte
         /// </summary>
-        [JsonProperty("fsizeMin", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fsizeMin")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public long? FsizeMin { get; set; }
 
         /// <summary>
         /// [可选]上传文件大小限制：最大值，单位Byte
         /// </summary>
-        [JsonProperty("fsizeLimit", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fsizeLimit")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public long? FsizeLimit { get; set; }
 
         /// <summary>
         /// [可选]上传时是否自动检测MIME
         /// </summary>
-        [JsonProperty("detectMime", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("detectMime")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? DetectMime { get; set; }
 
         /// <summary>
         /// [可选]上传文件MIME限制
         /// </summary>
-        [JsonProperty("mimeLimit", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("mimeLimit")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string MimeLimit { get; set; }
 
         /// <summary>
         /// [可选]文件上传后多少天后自动删除
         /// </summary>
-        [JsonProperty("deleteAfterDays", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("deleteAfterDays")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? DeleteAfterDays { get; set; }
 
         /// <summary>

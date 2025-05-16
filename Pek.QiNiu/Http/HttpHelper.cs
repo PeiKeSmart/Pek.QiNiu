@@ -32,7 +32,7 @@ namespace Qiniu.Http
         /// 资源类型：多分部数据
         /// </summary>
         public static string CONTENT_TYPE_MULTIPART = "multipart/form-data";
-        
+
         /// <summary>
         /// HTTP状态码200 (OK)
         /// </summary>
@@ -83,9 +83,9 @@ namespace Qiniu.Http
             string sfx = Environment.MachineName;
 #else
             var osInfo = Environment.OSVersion;
-            string sfx = Environment.MachineName + "; " + osInfo.Platform + "; " + osInfo.Version; 
+            string sfx = Environment.MachineName + "; " + osInfo.Platform + "; " + osInfo.Version;
 #endif
-            return string.Format("{0}/{1} ({2})", QiniuCSharpSDK.ALIAS, QiniuCSharpSDK.VERSION, sfx);
+            return string.Format("{0}/{1} ({2})", "Pek.QiNiu", "1.0.0", sfx);
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Qiniu.Http
         public static string createFormDataBoundary()
         {
             string now = DateTime.UtcNow.Ticks.ToString();
-            return string.Format("-------{0}Boundary{1}", QiniuCSharpSDK.ALIAS, Hashing.CalcMD5(now));
+            return string.Format("-------{0}Boundary{1}", "Pek.QiNiu", Hashing.CalcMD5(now));
         }
     }
 }

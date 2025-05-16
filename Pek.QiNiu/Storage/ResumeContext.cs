@@ -47,13 +47,13 @@ namespace Qiniu.Storage
         /// <summary>
         /// 新版分片上传上下文etag
         /// </summary>
-        [JsonProperty("etag")]
+        [JsonPropertyName("etag")]
         public Dictionary<string, object> Etag { get; set; }
 
         /// <summary>
         /// 新版分片上传md5校验值
         /// </summary>
-        [JsonProperty("md5")]
+        [JsonPropertyName("md5")]
         public string Md5 { get; set; }
     }
 }

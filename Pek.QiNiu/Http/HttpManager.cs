@@ -34,7 +34,7 @@ namespace Qiniu.Http
         public static string GetUserAgent()
         {
             string osDesc = Environment.OSVersion.Platform + "; " + Environment.OSVersion.Version;
-            return string.Format("{0}/{1} ({2}; {3})", QiniuCSharpSDK.ALIAS, QiniuCSharpSDK.VERSION, QiniuCSharpSDK.RTFX, osDesc);
+            return string.Format("{0}/{1} ({2}; {3})", "Pek.QiNiu", "1.0.0", ".NET", osDesc);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Qiniu.Http
         public static string CreateFormDataBoundary()
         {
             string now = DateTime.UtcNow.Ticks.ToString();
-            return string.Format("-------{0}Boundary{1}", QiniuCSharpSDK.ALIAS, Hashing.CalcMD5X(now));
+            return string.Format("-------{0}Boundary{1}", "Pek.QiNiu", Hashing.CalcMD5X(now));
         }
 
         public HttpRequestOptions CreateHttpRequestOptions(
@@ -229,7 +229,7 @@ namespace Qiniu.Http
             {
                 headers["Content-Type"] = ContentType.WWW_FORM_URLENC;
             }
-            
+
             addAuthHeaders(ref headers, auth);
 
             string token = auth.CreateManageTokenV2("GET", url, headers);
@@ -441,7 +441,7 @@ namespace Qiniu.Http
             {
                 headers["Content-Type"] = ContentType.WWW_FORM_URLENC;
             }
-            
+
             addAuthHeaders(ref headers, auth);
 
             string token = auth.CreateManageTokenV2("POST", url, headers, data);

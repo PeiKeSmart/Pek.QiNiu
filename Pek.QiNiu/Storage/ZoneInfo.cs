@@ -48,13 +48,15 @@ namespace Qiniu.Storage
 
         internal class ServiceDomains
         {
-            [JsonProperty("domains")]
+            [JsonPropertyName("domains")]
             public string[] Domains { get; set; }
 
-            [JsonProperty("old", NullValueHandling = NullValueHandling.Ignore)]
+            [JsonPropertyName("old")]
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
             public string[] Old { get; set; }
 
-            [JsonProperty("region_alias", NullValueHandling = NullValueHandling.Ignore)]
+            [JsonPropertyName("region_alias")]
+            [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
             public string RegionAlias { get; set; }
         }
     }
