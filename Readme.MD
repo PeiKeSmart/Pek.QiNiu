@@ -1,3 +1,3 @@
-﻿# Pek.BaoTa - 宝塔面板API库
+﻿# Pek.QiNiu - 七牛（云）SDK库
 
-宝塔面板API库
+七牛（云）SDK库

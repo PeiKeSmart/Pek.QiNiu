@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net9.0</TargetFrameworks>
-    <RootNamespace>Pek.BaoTa</RootNamespace>
+    <TargetFrameworks>netstandard2.0;netstandard2.1;net9.0</TargetFrameworks>
+    <RootNamespace>QiNiu</RootNamespace>
     <AssemblyTitle>七牛（云）SDK库</AssemblyTitle>
     <Description>基于DH框架的七牛（云）SDK库</Description>
     <Company>湖北登灏科技有限公司</Company>
@@ -48,10 +48,17 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Pek.Common" Version="4.12.2025.515-beta1004" />
+    <PackageReference Include="System.Text.Json" Version="9.0.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="..\Doc\DH.png" Link="DH.png" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CDN\" />
+    <Folder Include="Http\" />
+    <Folder Include="Storage\" />
   </ItemGroup>
 
 </Project>
