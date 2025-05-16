@@ -21,9 +21,11 @@ jobs:
     - name: Restore
       run: |
         dotnet restore Pek.QiNiu/Pek.QiNiu.csproj
+        dotnet restore Pek.QiNiu.Extensions/Pek.QiNiu.Extensions.csproj
     - name: Build
       run: |
         dotnet pack --no-restore --version-suffix $(date "+%Y.%m%d") -c Release -o out Pek.QiNiu/Pek.QiNiu.csproj
+        dotnet pack --no-restore --version-suffix $(date "+%Y.%m%d") -c Release -o out Pek.QiNiu.Extensions/Pek.QiNiu.Extensions.csproj
     - name: Publish
       run: |
         #dotnet nuget push ./out/*.nupkg --skip-duplicate --source https://nuget.pkg.github.com/PeiKeSmart/index.json --api-key ${{ github.token }}

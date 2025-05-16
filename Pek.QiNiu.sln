@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pek.QiNiu", "Pek.QiNiu\Pek.QiNiu.csproj", "{E6D09833-D575-8655-0326-4E8697F1A78D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pek.QiNiu.Extensions", "Pek.QiNiu.Extensions\Pek.QiNiu.Extensions.csproj", "{56A003C3-E2FF-4A88-A8EB-D6D0B6B72CC0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,10 @@ Global
 		{E6D09833-D575-8655-0326-4E8697F1A78D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6D09833-D575-8655-0326-4E8697F1A78D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6D09833-D575-8655-0326-4E8697F1A78D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56A003C3-E2FF-4A88-A8EB-D6D0B6B72CC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56A003C3-E2FF-4A88-A8EB-D6D0B6B72CC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56A003C3-E2FF-4A88-A8EB-D6D0B6B72CC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56A003C3-E2FF-4A88-A8EB-D6D0B6B72CC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

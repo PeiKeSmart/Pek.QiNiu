@@ -1,9 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard2.1;net9.0</TargetFrameworks>
-    <RootNamespace>QiNiu</RootNamespace>
+    <RootNamespace>Pek.QiNiu.Extensions</RootNamespace>
     <AssemblyTitle>七牛（云）SDK库</AssemblyTitle>
-    <Description>基于DH框架的七牛（云）SDK库</Description>
+    <Description>基于DH框架的七牛（云）SDK扩展类库</Description>
     <Company>湖北登灏科技有限公司</Company>
     <Copyright>©2020-2025 湖北登灏科技有限公司</Copyright>
     <VersionPrefix>4.12</VersionPrefix>
@@ -53,6 +53,10 @@
 
   <ItemGroup>
     <Content Include="..\Doc\DH.png" Link="DH.png" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pek.QiNiu\Pek.QiNiu.csproj" />
   </ItemGroup>
 
 </Project>
