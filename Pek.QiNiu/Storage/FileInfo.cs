@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Qiniu.Storage
 {
@@ -10,25 +10,25 @@ namespace Qiniu.Storage
         /// <summary>
         /// 文件大小(字节)
         /// </summary>
-        [JsonProperty("fsize")]
+        [JsonPropertyName("fsize")]
         public long Fsize { set; get; }
 
         /// <summary>
         /// 文件hash(ETAG)
         /// </summary>
-        [JsonProperty("hash")]
+        [JsonPropertyName("hash")]
         public string Hash { set; get; }
 
         /// <summary>
         /// 文件MIME类型
         /// </summary>
-        [JsonProperty("mimeType")]
+        [JsonPropertyName("mimeType")]
         public string MimeType { set; get; }
 
         /// <summary>
         /// 文件上传时间
         /// </summary>
-        [JsonProperty("putTime")]
+        [JsonPropertyName("putTime")]
         public long PutTime { set; get; }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Qiniu.Storage
         /// 3 深度归档存储
         /// 4 归档直读存储
         /// </summary>
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public int FileType { get; set; }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("md5", NullValueHandling = NullValueHandling.Ignore)]
         public string Md5 { get; set; }
-        
+
         /// <summary>
         /// 文件过期删除日期，Unix 时间戳格式。
         /// 文件在设置过期时间后才会返回该字段。
@@ -74,7 +74,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)]
         public int Expiration { get; set; }
-        
+
         /// <summary>
         /// 文件生命周期中转为低频存储的日期，Unix 时间戳格式。
         /// 文件在设置过期时间后才会返回该字段。
@@ -82,7 +82,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("transitionToIA", NullValueHandling = NullValueHandling.Ignore)]
         public int TransitionToIa { get; set; }
-        
+
         /// <summary>
         /// 文件生命周期中转为归档直读存储的日期，Unix 时间戳格式。
         /// 文件在设置过期时间后才会返回该字段。
@@ -98,7 +98,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("transitionToARCHIVE", NullValueHandling = NullValueHandling.Ignore)]
         public int TransitionToArchive { get; set; }
-        
+
         /// <summary>
         /// 文件生命周期中转为深度归档存储的日期，Unix 时间戳格式。
         /// 文件在设置过期时间后才会返回该字段。

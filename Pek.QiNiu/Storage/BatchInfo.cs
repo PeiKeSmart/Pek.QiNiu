@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 namespace Qiniu.Storage
 {
     /// <summary>
@@ -9,13 +9,15 @@ namespace Qiniu.Storage
         /// <summary>
         /// 状态码
         /// </summary>
-        [JsonProperty("code",NullValueHandling=NullValueHandling.Ignore)]
+        [JsonPropertyName("code")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int Code { get; set; }
 
         /// <summary>
         /// 消息
         /// </summary>
-        [JsonProperty("data",NullValueHandling=NullValueHandling.Ignore)]
+        [JsonPropertyName("data")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public BatchData Data { get; set; }
     }
 
@@ -89,7 +91,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("md5", NullValueHandling = NullValueHandling.Ignore)]
         public string Md5 { get; set; }
-        
+
         /// <summary>
         /// 文件过期删除日期，Unix 时间戳格式。
         /// 文件在设置过期时间后才会返回该字段。
@@ -97,7 +99,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("expiration", NullValueHandling = NullValueHandling.Ignore)]
         public int Expiration { get; set; }
-        
+
         /// <summary>
         /// 文件生命周期中转为低频存储的日期，Unix 时间戳格式。
         /// 文件在设置低频存储转换时间后才会返回该字段。
@@ -105,7 +107,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("TransitionToIA", NullValueHandling = NullValueHandling.Ignore)]
         public int TransitionToIa { get; set; }
-        
+
         /// <summary>
         /// 文件生命周期中转为归档直读存储的日期，Unix 时间戳格式。
         /// 文件在设置归档直读存储转换时间后才会返回该字段。
@@ -121,7 +123,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("transitionToARCHIVE", NullValueHandling = NullValueHandling.Ignore)]
         public int TransitionToArchive { get; set; }
-        
+
         /// <summary>
         /// 文件生命周期中转为深度归档存储的日期，Unix 时间戳格式。
         /// 文件在设置深度归档存储转换时间后才会返回该字段。

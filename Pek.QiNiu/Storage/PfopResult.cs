@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Qiniu.Http;
 
 namespace Qiniu.Storage
@@ -21,7 +21,7 @@ namespace Qiniu.Storage
 
                 if ((Code == (int)HttpCode.OK) && (!string.IsNullOrEmpty(Text)))
                 {
-                    Dictionary<string,string> ret= JsonConvert.DeserializeObject<Dictionary<string,string>>(Text);
+                    Dictionary<string,string> ret= Qiniu.Util.JsonHelper.Deserialize<Dictionary<string,string>>(Text);
                     if (ret.ContainsKey("persistentId"))
                     {
                         pid = ret["persistentId"];
@@ -39,7 +39,7 @@ namespace Qiniu.Storage
         {
             StringBuilder sb = new StringBuilder();
 
-            sb.AppendFormat("code: {0}\n", Code);         
+            sb.AppendFormat("code: {0}\n", Code);
 
             if (!string.IsNullOrEmpty(PersistentId))
             {

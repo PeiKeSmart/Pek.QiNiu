@@ -2,7 +2,7 @@
 using System.Text;
 using System.Collections.Generic;
 using Qiniu.Http;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Qiniu.Storage
 {
@@ -11,7 +11,7 @@ namespace Qiniu.Storage
         public DateTime Deadline { get; set; }
         public Zone Zone { get; set; }
     }
-    
+
     /// <summary>
     /// Zone辅助类，查询及配置Zone
     /// </summary>
@@ -67,7 +67,7 @@ namespace Qiniu.Storage
             {
                 backupUcHosts = Config.DefaultBackupQueryRegionHosts;
             }
-            
+
             try
             {
                 string queryUrl = string.Format("{0}/v4/query?ak={1}&bucket={2}",
@@ -88,12 +88,12 @@ namespace Qiniu.Storage
                     throw new Exception("code: " + hr.Code + ", text: " + hr.Text + ", ref-text:" + hr.RefText);
                 }
 
-                ZoneInfo zInfo = JsonConvert.DeserializeObject<ZoneInfo>(hr.Text);
+                ZoneInfo zInfo = Qiniu.Util.JsonHelper.Deserialize<ZoneInfo>(hr.Text);
                 if (zInfo == null)
                 {
                     throw new Exception("JSON Deserialize failed: " + hr.Text);
                 }
-                
+
                 if (zInfo.Hosts.Length == 0)
                 {
                     throw new Exception("There are no hosts available: " + hr.Text);

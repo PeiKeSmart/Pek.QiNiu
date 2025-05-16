@@ -1,5 +1,5 @@
 ﻿using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Qiniu.Http;
 
 namespace Qiniu.CDN
@@ -19,7 +19,7 @@ namespace Qiniu.CDN
                 PrefetchInfo info = null;
                 if ((Code == (int)HttpCode.OK) && (!string.IsNullOrEmpty(Text)))
                 {
-                    info=JsonConvert.DeserializeObject<PrefetchInfo>(Text);
+                    info=Qiniu.Util.JsonHelper.Deserialize<PrefetchInfo>(Text);
                 }
                 return info;
             }

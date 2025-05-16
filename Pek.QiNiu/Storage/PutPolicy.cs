@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Qiniu.Storage
 {
@@ -11,25 +11,27 @@ namespace Qiniu.Storage
         /// <summary>
         /// [必需]bucket或者bucket:key
         /// </summary>
-        [JsonProperty("scope")]
+        [JsonPropertyName("scope")]
         public string Scope { get; set; }
 
         /// <summary>
         /// [可选]若为 1，表示允许用户上传以 scope 的 keyPrefix 为前缀的文件。
         /// </summary>
-        [JsonProperty("isPrefixalScope", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("isPrefixalScope")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? isPrefixalScope { get; set; }
 
         /// <summary>
         /// [必需]上传策略失效时刻，请使用SetExpire来设置它
         /// </summary>
-        [JsonProperty("deadline")]
+        [JsonPropertyName("deadline")]
         public long Deadline { get; private set; }
 
         /// <summary>
         /// [可选]"仅新增"模式
         /// </summary>
-        [JsonProperty("insertOnly", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("insertOnly")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? InsertOnly { get; set; }
 
         /// <summary>
@@ -116,7 +118,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("persistentType", NullValueHandling = NullValueHandling.Ignore)]
         public int? PersistentType { get; set; }
-        
+
         /// <summary>
         /// [可选]任务模版，与 PersistentOps 二选一
         /// </summary>
@@ -157,7 +159,8 @@ namespace Qiniu.Storage
         /// <summary>
         /// [可选]文件的存储类型，默认为普通存储，设置为：0 标准存储（默认），1 低频存储，2 归档存储，3 深度归档存储
         /// </summary>
-        [JsonProperty("fileType", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("fileType")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public int? FileType { get; set; }
 
         /// <summary>
@@ -185,7 +188,7 @@ namespace Qiniu.Storage
                 //默认一个小时有效期
                 this.SetExpires(3600);
             }
-            return JsonConvert.SerializeObject(this);
+            return Qiniu.Util.JsonHelper.Serialize(this);
         }
 
     }

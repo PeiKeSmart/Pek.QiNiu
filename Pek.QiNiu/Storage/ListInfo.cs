@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 namespace Qiniu.Storage
 {
     /// <summary>
     /// 获取空间文件(list操作)
-    /// 
+    ///
     /// 返回JSON字符串
-    /// 
+    ///
     /// {
     ///     "marker":"MARKER",
     ///     "items":
@@ -25,14 +25,15 @@ namespace Qiniu.Storage
     ///     ],
     ///     "CmmonPrefixes":"COMMON_PREFIXES"
     /// }
-    /// 
+    ///
     /// </summary>
     public class ListInfo
     {
         /// <summary>
         /// marker标记
         /// </summary>
-        [JsonProperty("marker", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("marker")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Marker { get; set; }
 
         /// <summary>

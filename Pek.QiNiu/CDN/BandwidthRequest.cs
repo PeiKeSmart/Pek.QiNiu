@@ -64,6 +64,6 @@ public class BandwidthRequest
     /// <returns>请求内容的JSON字符串</returns>
     public string ToJsonStr()
     {
-        return JsonSerializer.Serialize(this);
+        return Qiniu.Util.JsonHelper.Serialize(this);
     }
 }

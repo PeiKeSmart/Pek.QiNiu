@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using Qiniu.Util;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Qiniu.Storage
 {
@@ -41,7 +41,7 @@ namespace Qiniu.Storage
                     using (StreamReader sr = new StreamReader(fs))
                     {
                         string jsonStr = sr.ReadToEnd();
-                        resumeInfo=JsonConvert.DeserializeObject<ResumeInfo>(jsonStr);
+                        resumeInfo=Qiniu.Util.JsonHelper.Deserialize<ResumeInfo>(jsonStr);
                     }
                 }
             }

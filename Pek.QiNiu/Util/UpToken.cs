@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using Newtonsoft.Json;
+using System.Text.Json;
 using Qiniu.Storage;
 namespace Qiniu.Util
 {
@@ -40,7 +40,7 @@ namespace Qiniu.Util
                 try
                 {
                     string policyStr = Encoding.UTF8.GetString(Base64.UrlsafeBase64Decode(encodedPolicy));
-                    PutPolicy putPolicy = JsonConvert.DeserializeObject<PutPolicy>(policyStr);
+                    PutPolicy putPolicy = JsonHelper.Deserialize<PutPolicy>(policyStr);
                     string scope = putPolicy.Scope;
                     string[] scopeItems = scope.Split(':');
                     if (scopeItems.Length >= 1)

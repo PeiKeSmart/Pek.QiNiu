@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 namespace Qiniu.Storage
 {
     /// <summary>
@@ -9,31 +9,31 @@ namespace Qiniu.Storage
         /// <summary>
         /// 文件名
         /// </summary>
-        [JsonProperty("key")]
+        [JsonPropertyName("key")]
         public string Key { get; set; }
 
         /// <summary>
         /// 文件hash(ETAG)
         /// </summary>
-        [JsonProperty("hash")]
+        [JsonPropertyName("hash")]
         public string Hash { get; set; }
 
         /// <summary>
         /// 文件大小(字节)
         /// </summary>
-        [JsonProperty("fsize")]
+        [JsonPropertyName("fsize")]
         public long Fsize { get; set; }
 
         /// <summary>
         /// 文件MIME类型
         /// </summary>
-        [JsonProperty("mimeType")]
+        [JsonPropertyName("mimeType")]
         public string MimeType { get; set; }
 
         /// <summary>
         /// 上传时间
         /// </summary>
-        [JsonProperty("putTime")]
+        [JsonPropertyName("putTime")]
         public long PutTime { get; set; }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("endUser", NullValueHandling = NullValueHandling.Ignore)]
         public string EndUser { get; set; }
-        
+
         /// <summary>
         /// 文件的存储状态
         /// 0 启用
@@ -61,7 +61,7 @@ namespace Qiniu.Storage
         /// </summary>
         [JsonProperty("status")]
         public int Status { get; set; }
-        
+
         /// <summary>
         /// 文件的 md5 值
         /// 服务端不确保一定返回此字段，详见：

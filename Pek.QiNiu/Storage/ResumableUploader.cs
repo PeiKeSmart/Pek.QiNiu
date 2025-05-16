@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading;
 using Qiniu.Util;
 using Qiniu.Http;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Qiniu.Storage
 {
@@ -251,8 +251,8 @@ namespace Qiniu.Storage
                     );
                     runningTaskEvents.Add(makeBlockEvent);
                 }
-                
-                
+
+
                 if (runningTaskEvents.Count > 0)
                 {
                     WaitHandle.WaitAll(runningTaskEvents.ToArray());
@@ -344,7 +344,7 @@ namespace Qiniu.Storage
                 if (resumeInfo == null || UnixTimestamp.IsContextExpired(resumeInfo.ExpiredAt))
                 {
                     HttpResult res = initReq(encodedObjectName, upToken);
-                    Dictionary<string, string> responseBody = JsonConvert.DeserializeObject<Dictionary<string, string>>(res.Text);
+                    Dictionary<string, string> responseBody = Qiniu.Util.JsonHelper.Deserialize<Dictionary<string, string>>(res.Text);
                     if (res.Code != 200)
                     {
                         return res;
@@ -374,7 +374,7 @@ namespace Qiniu.Storage
                 // set upload progress
                 putExtra.ProgressHandler(uploadedBytes, fileSize);
 
-                
+
                 // init block upload error
                 // check not finished blocks to upload
                 UploadControllerAction upCtrl = putExtra.UploadController();
@@ -734,7 +734,7 @@ namespace Qiniu.Storage
                     {
                         if (putExtra.Version == "v1")
                         {
-                            ResumeContext rc = JsonConvert.DeserializeObject<ResumeContext>(result.Text);
+                            ResumeContext rc = Qiniu.Util.JsonHelper.Deserialize<ResumeContext>(result.Text);
 
                             if (rc.Crc32 > 0)
                             {
@@ -769,7 +769,7 @@ namespace Qiniu.Storage
                         }
                         else if (putExtra.Version == "v2")
                         {
-                            Dictionary<string, string> rc = JsonConvert.DeserializeObject<Dictionary<string, string>>(result.Text);
+                            Dictionary<string, string> rc = Qiniu.Util.JsonHelper.Deserialize<Dictionary<string, string>>(result.Text);
                             string md5 = LabMD5.GenerateMD5(blockBuffer);
                             if (md5 != rc["md5"])
                             {
@@ -1028,7 +1028,7 @@ namespace Qiniu.Storage
                 body.Add("customVars", putExtra.Params);
                 body.Add("parts", resumeInfo.Etags);
                 string url = string.Format("{0}/buckets/{1}/objects/{2}/uploads/{3}", uploadHost, bucket, encodedObjectName, resumeInfo.UploadId);
-                string bodyStr = JsonConvert.SerializeObject(body);
+                string bodyStr = Qiniu.Util.JsonHelper.Serialize(body);
                 result = httpManager.PostJson(url, bodyStr, upTokenStr);
             }
             catch (Exception ex)
