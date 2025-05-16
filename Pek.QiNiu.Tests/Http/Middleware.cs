@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized; // Added for StringDictionary
+
+using NUnit.Framework;
+using NUnit.Framework.Legacy; // Ensure this is present
 
 using Qiniu.Http;
 
@@ -16,10 +20,10 @@ class RecorderMiddleware : IMiddleware
         _label = label;
     }
 
-    public HttpResult Send(HttpRequestOptions req, DNextSend next)
+    public HttpResult Send(Qiniu.Http.HttpRequestOptions req, DNextSend next)
     {
         _orderRecorder.Add("bef_" + _label + _orderRecorder.Count);
-        HttpResult result = next(req);
+        var result = next(req);
         _orderRecorder.Add("aft_" + _label + _orderRecorder.Count);
         return result;
     }
@@ -31,19 +35,19 @@ public class MiddlewareTests
     [Test]
     public void SendWithMiddlewareTest()
     {
-        HttpManager httpManager = new HttpManager(true);
+        var httpManager = new HttpManager(true);
 
-        List<string> orderRecorder = new List<string>();
+        var orderRecorder = new List<string>();
 
-        List<IMiddleware> middlewares = new List<IMiddleware>
+        var middlewares = new List<IMiddleware>
             {
                 new RecorderMiddleware(orderRecorder, "A"),
                 new RecorderMiddleware(orderRecorder, "B")
             };
 
-        HttpResult resp = httpManager.Get("https://example.com/index.html", null, null, middlewares);
+        var resp = httpManager.Get("https://example.com/index.html", new StringDictionary(), "", middlewares); // Changed second and third arguments
 
-        Assert.AreEqual((int)HttpCode.OK, resp.Code, resp.ToString());
+        Assert.That(resp.Code, Is.EqualTo((int)HttpCode.OK), resp.ToString()); // Changed to Assert.That
         CollectionAssert.AreEqual(
             new List<string>
             {
@@ -60,11 +64,11 @@ public class MiddlewareTests
     public void RetryDomainsMiddlewareTest()
     {
 
-        HttpManager httpManager = new HttpManager(true);
+        var httpManager = new HttpManager(true);
 
-        List<string> orderRecorder = new List<string>();
+        var orderRecorder = new List<string>();
 
-        List<IMiddleware> middlewares = new List<IMiddleware>
+        var middlewares = new List<IMiddleware>
             {
                 new RetryDomainsMiddleware(
                     new List<string>
@@ -77,9 +81,9 @@ public class MiddlewareTests
                 new RecorderMiddleware(orderRecorder, "A")
             };
 
-        HttpResult resp = httpManager.Get("https://fake.csharpsdk.qiniu.com/index.html", null, null, middlewares);
+        var resp = httpManager.Get("https://fake.csharpsdk.qiniu.com/index.html", new StringDictionary(), "", middlewares); // Changed second and third arguments
 
-        Assert.AreEqual((int)HttpCode.OK, resp.Code, resp.ToString());
+        Assert.That(resp.Code, Is.EqualTo((int)HttpCode.OK), resp.ToString()); // Changed to Assert.That
 
         CollectionAssert.AreEqual(
             new List<string>
