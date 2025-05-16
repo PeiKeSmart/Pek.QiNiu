@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 
+using Qiniu.Util;
+
 namespace Pek.QiNiu.Tests.Util;
 
 [TestFixture]

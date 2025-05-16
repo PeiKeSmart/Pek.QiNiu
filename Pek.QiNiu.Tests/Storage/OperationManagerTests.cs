@@ -1,6 +1,11 @@
-﻿using System.Text;
+﻿using System.Collections;
+using System.Text;
 
 using NUnit.Framework;
+
+using Qiniu.Http;
+using Qiniu.Storage;
+using Qiniu.Util;
 
 namespace Pek.QiNiu.Tests.Storage;
 

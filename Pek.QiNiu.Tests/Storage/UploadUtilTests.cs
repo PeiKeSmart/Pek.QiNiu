@@ -1,4 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System.Collections;
+
+using NUnit.Framework;
+
+using Qiniu.Storage;
 
 namespace Pek.QiNiu.Tests.Storage;
 

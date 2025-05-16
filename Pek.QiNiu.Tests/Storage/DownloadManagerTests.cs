@@ -1,5 +1,8 @@
 ﻿using NUnit.Framework;
 
+using Qiniu.Storage;
+using Qiniu.Util;
+
 namespace Pek.QiNiu.Tests.Storage;
 
 [TestFixture]

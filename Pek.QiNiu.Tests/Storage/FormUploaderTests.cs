@@ -4,6 +4,10 @@ using Newtonsoft.Json;
 
 using NUnit.Framework;
 
+using Qiniu.Http;
+using Qiniu.Storage;
+using Qiniu.Util;
+
 namespace Pek.QiNiu.Tests.Storage;
 
 [TestFixture]
