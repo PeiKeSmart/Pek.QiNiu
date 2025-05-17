@@ -3,6 +3,7 @@ using System.Collections.Specialized;
 using System.Reflection;
 
 using NUnit.Framework;
+using NUnit.Framework.Legacy; // Ensure this is present for ClassicAssert
 
 using Qiniu.Http;
 using Qiniu.Util;
@@ -13,7 +14,7 @@ namespace Pek.QiNiu.Tests.Http;
 public class HttpManagerTests
 {
     private static HttpManager httpManager = new HttpManager();
-    private static MethodInfo dynMethod = httpManager.GetType().GetMethod("addAuthHeaders",
+    private static MethodInfo? dynMethod = httpManager.GetType().GetMethod("addAuthHeaders", // Added ? for nullable
          BindingFlags.NonPublic | BindingFlags.Instance);
     private static Mac mac = new Mac("ak", "sk");
 
@@ -26,24 +27,24 @@ public class HttpManagerTests
     [Test]
     public void DisableQiniuTimestampSignatureDefaultTest()
     {
-        StringDictionary headers = new StringDictionary();
-        Auth auth = new Auth(mac);
-        dynMethod.Invoke(httpManager, new object[] { headers, auth });
+        var headers = new StringDictionary(); // Changed to var
+        var auth = new Auth(mac); // Changed to var
+        dynMethod?.Invoke(httpManager, new object[] { headers, auth }); // Added ?. for null conditional
 
-        Assert.True(headers.ContainsKey("X-Qiniu-Date"));
+        ClassicAssert.IsTrue(headers.ContainsKey("X-Qiniu-Date")); // Changed to ClassicAssert.IsTrue
     }
 
     [Test]
     public void DisableQiniuTimestampSignatureTest()
     {
-        StringDictionary headers = new StringDictionary();
-        Auth auth = new Auth(mac, new AuthOptions
+        var headers = new StringDictionary(); // Changed to var
+        var auth = new Auth(mac, new AuthOptions // Changed to var
         {
             DisableQiniuTimestampSignature = true
         });
-        dynMethod.Invoke(httpManager, new object[] { headers, auth });
+        dynMethod?.Invoke(httpManager, new object[] { headers, auth }); // Added ?. for null conditional
 
-        Assert.False(headers.ContainsKey("X-Qiniu-Date"));
+        ClassicAssert.IsFalse(headers.ContainsKey("X-Qiniu-Date")); // Changed to ClassicAssert.IsFalse
     }
 
     [Test]
@@ -51,11 +52,11 @@ public class HttpManagerTests
     {
         Environment.SetEnvironmentVariable("DISABLE_QINIU_TIMESTAMP_SIGNATURE", "true");
 
-        StringDictionary headers = new StringDictionary();
-        Auth auth = new Auth(mac);
-        dynMethod.Invoke(httpManager, new object[] { headers, auth });
+        var headers = new StringDictionary(); // Changed to var
+        var auth = new Auth(mac); // Changed to var
+        dynMethod?.Invoke(httpManager, new object[] { headers, auth }); // Added ?. for null conditional
 
-        Assert.False(headers.ContainsKey("X-Qiniu-Date"));
+        ClassicAssert.IsFalse(headers.ContainsKey("X-Qiniu-Date")); // Changed to ClassicAssert.IsFalse
     }
 
     [Test]
@@ -63,13 +64,13 @@ public class HttpManagerTests
     {
         Environment.SetEnvironmentVariable("DISABLE_QINIU_TIMESTAMP_SIGNATURE", "true");
 
-        StringDictionary headers = new StringDictionary();
-        Auth auth = new Auth(mac, new AuthOptions
+        var headers = new StringDictionary(); // Changed to var
+        var auth = new Auth(mac, new AuthOptions // Changed to var
         {
             DisableQiniuTimestampSignature = false
         });
-        dynMethod.Invoke(httpManager, new object[] { headers, auth });
+        dynMethod?.Invoke(httpManager, new object[] { headers, auth }); // Added ?. for null conditional
 
-        Assert.True(headers.ContainsKey("X-Qiniu-Date"));
+        ClassicAssert.IsTrue(headers.ContainsKey("X-Qiniu-Date")); // Changed to ClassicAssert.IsTrue
     }
 }

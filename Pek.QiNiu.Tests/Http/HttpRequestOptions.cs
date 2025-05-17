@@ -13,26 +13,25 @@ public class HttpRequestOptionsTests
     [Test]
     public void SetUrlTest()
     {
-        HttpRequestOptions reqOpts = new HttpRequestOptions();
+        var reqOpts = new Qiniu.Http.HttpRequestOptions();
         reqOpts.Url = "https://qiniu.com/index.html";
 
-        HttpWebRequest wReq = reqOpts.CreateHttpWebRequest();
-        Assert.AreEqual("https://qiniu.com/index.html", wReq.Address.ToString());
+        var wReq = reqOpts.CreateHttpWebRequest();
+        Assert.That(wReq.Address.ToString(), Is.EqualTo("https://qiniu.com/index.html"));
         wReq.Abort();
 
         reqOpts.Url = "https://www.qiniu.com/index.html";
         wReq = reqOpts.CreateHttpWebRequest();
-        Assert.AreEqual("https://www.qiniu.com/index.html", wReq.Address.ToString());
+        Assert.That(wReq.Address.ToString(), Is.EqualTo("https://www.qiniu.com/index.html"));
         wReq.Abort();
     }
 
     [Test]
     public void SetPropertiesTest()
     {
-        HttpRequestOptions reqOpts = new HttpRequestOptions();
+        var reqOpts = new Qiniu.Http.HttpRequestOptions();
         reqOpts.Url = "https://qiniu.com/index.html";
 
-        // some items are hard to set and test, skipped.
         reqOpts.AllowAutoRedirect = false; // default true
         reqOpts.AllowReadStreamBuffering = true; // default false
         reqOpts.AllowWriteStreamBuffering = false; // default true
@@ -60,33 +59,33 @@ public class HttpRequestOptionsTests
         reqOpts.UnsafeAuthenticatedConnectionSharing = true; // default false
         reqOpts.UseDefaultCredentials = true; // default false
 
-        HttpWebRequest wReq = reqOpts.CreateHttpWebRequest();
-        Assert.AreEqual(false, wReq.AllowAutoRedirect); // default true
-        Assert.AreEqual(true, wReq.AllowReadStreamBuffering); // default false
-        Assert.AreEqual(false, wReq.AllowWriteStreamBuffering); // default true
+        var wReq = reqOpts.CreateHttpWebRequest();
+        Assert.That(wReq.AllowAutoRedirect, Is.False);
+        Assert.That(wReq.AllowReadStreamBuffering, Is.True);
+        Assert.That(wReq.AllowWriteStreamBuffering, Is.False);
                                                                 // Assert.AreEqual(, wReq.AutomaticDecompression); // default Null 
                                                                 // Assert(, wReq.CachePolicy); // default Null
                                                                 // Assert(, wReq.ClientCertificates); // default System.Security.Cryptography.X509Certificates.X509CertificateCollection
-        Assert.AreEqual("qngroup", wReq.ConnectionGroupName); // default ""
+        Assert.That(wReq.ConnectionGroupName, Is.EqualTo("qngroup"));
                                                               // Assert(, wReq.ContinueDelegate); // default Null
-        Assert.AreEqual(360, wReq.ContinueTimeout); // default 350
+        Assert.That(wReq.ContinueTimeout, Is.EqualTo(360));
                                                     // Assert(, wReq.CookieContainer); // default Null
                                                     // Assert(, wReq.Credentials); // default Null
                                                     // Assert(, wReq.ImpersonationLevel); // default Null
-        Assert.AreEqual(false, wReq.KeepAlive); // default true
-        Assert.AreEqual(10, wReq.MaximumAutomaticRedirections); // default 50
-        Assert.AreEqual(32, wReq.MaximumResponseHeadersLength); // default 64
-        Assert.AreEqual("video/mp4", wReq.MediaType); // default ""
-        Assert.AreEqual("POST", wReq.Method); // default "GET"
-        Assert.AreEqual(false, wReq.Pipelined); // default true
-        Assert.AreEqual(true, wReq.PreAuthenticate); // default false
+        Assert.That(wReq.KeepAlive, Is.False);
+        Assert.That(wReq.MaximumAutomaticRedirections, Is.EqualTo(10));
+        Assert.That(wReq.MaximumResponseHeadersLength, Is.EqualTo(32));
+        Assert.That(wReq.MediaType, Is.EqualTo("video/mp4"));
+        Assert.That(wReq.Method, Is.EqualTo("POST"));
+        Assert.That(wReq.Pipelined, Is.False);
+        Assert.That(wReq.PreAuthenticate, Is.True);
                                                      // Assert(, wReq.Proxy); // default System.Net.SystemWebProxy;
-        Assert.AreEqual(200000, wReq.ReadWriteTimeout); // default 300000
-        Assert.AreEqual(true, wReq.SendChunked); // default false
+        Assert.That(wReq.ReadWriteTimeout, Is.EqualTo(200000));
+        Assert.That(wReq.SendChunked, Is.True);
                                                  // Assert(, wReq.ServerCertificateValidationCallback); // default Null
-        Assert.AreEqual(50000, wReq.Timeout); // default 100000
-        Assert.AreEqual(true, wReq.UnsafeAuthenticatedConnectionSharing); // default false
-        Assert.AreEqual(true, wReq.UseDefaultCredentials); // default false
+        Assert.That(wReq.Timeout, Is.EqualTo(50000));
+        Assert.That(wReq.UnsafeAuthenticatedConnectionSharing, Is.True);
+        Assert.That(wReq.UseDefaultCredentials, Is.True);
 
         wReq.Abort();
     }
@@ -94,7 +93,7 @@ public class HttpRequestOptionsTests
     [Test]
     public void SetHeadersTest()
     {
-        HttpRequestOptions reqOpts = new HttpRequestOptions();
+        var reqOpts = new Qiniu.Http.HttpRequestOptions();
         reqOpts.Url = "https://qiniu.com/index.html";
 
         reqOpts.Headers = new StringDictionary
@@ -111,20 +110,19 @@ public class HttpRequestOptionsTests
                 { "X-Qiniu-A", "qn" }
             };
 
-        // TransferEncoding requires the SendChunked property to be set to true
         reqOpts.SendChunked = true;
 
-        HttpWebRequest wReq = reqOpts.CreateHttpWebRequest();
-        Assert.AreEqual("text/plain", wReq.Accept);
-        Assert.AreEqual("text/plain", wReq.ContentType);
-        Assert.AreEqual(DateTime.Parse("Wed, 03 Aug 2011 04:00:00 GMT"), wReq.Date);
-        Assert.AreEqual("200-ok", wReq.Expect);
-        Assert.AreEqual("qiniu.com", wReq.Host);
-        Assert.AreEqual(DateTime.Parse("Wed, 03 Aug 2011 04:00:00 GMT"), wReq.IfModifiedSince);
-        Assert.AreEqual("https://qiniu.com/", wReq.Referer);
-        Assert.AreEqual("gzip", wReq.TransferEncoding);
-        Assert.AreEqual("qn-csharp-sdk", wReq.UserAgent);
-        Assert.AreEqual("qn", wReq.Headers["X-Qiniu-A"]);
+        var wReq = reqOpts.CreateHttpWebRequest();
+        Assert.That(wReq.Accept, Is.EqualTo("text/plain"));
+        Assert.That(wReq.ContentType, Is.EqualTo("text/plain"));
+        Assert.That(wReq.Date, Is.EqualTo(DateTime.Parse("Wed, 03 Aug 2011 04:00:00 GMT")));
+        Assert.That(wReq.Expect, Is.EqualTo("200-ok"));
+        Assert.That(wReq.Host, Is.EqualTo("qiniu.com"));
+        Assert.That(wReq.IfModifiedSince, Is.EqualTo(DateTime.Parse("Wed, 03 Aug 2011 04:00:00 GMT")));
+        Assert.That(wReq.Referer, Is.EqualTo("https://qiniu.com/"));
+        Assert.That(wReq.TransferEncoding, Is.EqualTo("gzip"));
+        Assert.That(wReq.UserAgent, Is.EqualTo("qn-csharp-sdk"));
+        Assert.That(wReq.Headers["X-Qiniu-A"], Is.EqualTo("qn"));
 
         wReq.Abort();
     }
