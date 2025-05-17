@@ -10,30 +10,28 @@ public class ZoneHelperTests : TestEnv
     [Test]
     public void QueryZoneTest()
     {
-        Zone zone = ZoneHelper.QueryZone(AccessKey, Bucket);
-
-        Assert.NotNull(zone);
+        var zone = ZoneHelper.QueryZone(AccessKey, Bucket);
+        Assert.That(zone, Is.Not.Null);
     }
 
     [Test]
     public void QueryZoneWithCustomQueryRegionHost()
     {
-        Config config = new Config();
+        var config = new Config();
         config.SetQueryRegionHost("uc.qbox.me");
         config.UseHttps = true;
-
-        Zone zone = ZoneHelper.QueryZone(
+        var zone = ZoneHelper.QueryZone(
             AccessKey,
             Bucket,
             config.UcHost()
         );
-        Assert.NotNull(zone);
+        Assert.That(zone, Is.Not.Null);
     }
 
     [Test]
     public void QueryZoneWithBackupHostsTest()
     {
-        Config config = new Config();
+        var config = new Config();
         config.SetQueryRegionHost("fake-uc.csharp.qiniu.com");
         config.SetBackupQueryRegionHosts(new List<string>
                 {
@@ -42,20 +40,19 @@ public class ZoneHelperTests : TestEnv
                 }
         );
         config.UseHttps = true;
-
-        Zone zone = ZoneHelper.QueryZone(
+        var zone = ZoneHelper.QueryZone(
             AccessKey,
             Bucket,
             config.UcHost(),
             config.BackupQueryRegionHosts()
         );
-        Assert.NotNull(zone);
+        Assert.That(zone, Is.Not.Null);
     }
 
     [Test]
     public void QueryZoneWithUcAndBackupHostsTest()
     {
-        Config config = new Config();
+        var config = new Config();
         config.SetUcHost("fake-uc.csharp.qiniu.com");
         config.SetBackupQueryRegionHosts(new List<string>
                 {
@@ -64,13 +61,12 @@ public class ZoneHelperTests : TestEnv
                 }
         );
         config.UseHttps = true;
-
-        Zone zone = ZoneHelper.QueryZone(
+        var zone = ZoneHelper.QueryZone(
             AccessKey,
             Bucket,
             config.UcHost(),
             config.BackupQueryRegionHosts()
         );
-        Assert.NotNull(zone);
+        Assert.That(zone, Is.Not.Null);
     }
 }

@@ -32,14 +32,14 @@ public class ConfigTests : TestEnv
     {
         // Act
         string httpUrl = _config.UcHost();
-        
+
         // Assert
         Assert.That(httpUrl, Is.EqualTo("http://uc.qiniuapi.com"));
-        
+
         // 修改为HTTPS
         _config.UseHttps = true;
         string httpsUrl = _config.UcHost();
-        
+
         // Assert
         Assert.That(httpsUrl, Is.EqualTo("https://uc.qiniuapi.com"));
     }
@@ -49,11 +49,11 @@ public class ConfigTests : TestEnv
     {
         // Arrange
         string customHost = "custom.qiniuapi.com";
-        
+
         // Act
         _config.SetUcHost(customHost);
         string url = _config.UcHost();
-        
+
         // Assert
         Assert.That(url, Is.EqualTo($"http://{customHost}"));
     }
@@ -61,19 +61,19 @@ public class ConfigTests : TestEnv
     [Test]
     public void UcHostTest()
     {
-        Config config = new Config();
-        string ucHost = config.UcHost();
-        Assert.AreEqual("http://uc.qiniuapi.com", ucHost);
+        var config = new Config();
+        var ucHost = config.UcHost();
+        Assert.That(ucHost, Is.EqualTo("http://uc.qiniuapi.com"));
         config.SetUcHost("uc.example.com");
         ucHost = config.UcHost();
-        Assert.AreEqual("http://uc.example.com", ucHost);
+        Assert.That(ucHost, Is.EqualTo("http://uc.example.com"));
 
         config = new Config();
         config.UseHttps = true;
         ucHost = config.UcHost();
-        Assert.AreEqual("https://uc.qiniuapi.com", ucHost);
+        Assert.That(ucHost, Is.EqualTo("https://uc.qiniuapi.com"));
         config.SetUcHost("uc.example.com");
         ucHost = config.UcHost();
-        Assert.AreEqual("https://uc.example.com", ucHost);
+        Assert.That(ucHost, Is.EqualTo("https://uc.example.com"));
     }
 }

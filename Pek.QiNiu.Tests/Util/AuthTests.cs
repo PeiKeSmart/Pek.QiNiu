@@ -82,8 +82,8 @@ namespace Pek.QiNiu.Tests.Util
         [Test]
         public void CreateManageTokenV2Test()
         {
-            string actual = auth.CreateManageTokenV2("GET", "http://rs.qbox.me");
-            Assert.AreEqual("Qiniu ak:bgfeAqx6xXMIXA232e8ocxfhINc=", actual);
+            var actual = auth.CreateManageTokenV2("GET", "http://rs.qbox.me");
+            Assert.That(actual, Is.EqualTo("Qiniu ak:bgfeAqx6xXMIXA232e8ocxfhINc="));
         }
     }
 }
