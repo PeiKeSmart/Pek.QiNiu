@@ -14,36 +14,36 @@ public class OperationManagerTests : TestEnv
 {
     private OperationManager getOperationManager()
     {
-        Mac mac = new Mac(AccessKey, SecretKey);
-        Config config = new Config();
+        var mac = new Mac(AccessKey, SecretKey);
+        var config = new Config();
         config.UseHttps = true;
 
-        OperationManager manager = new OperationManager(mac, config);
+        var manager = new OperationManager(mac, config);
         return manager;
     }
 
     [Test]
     public void PfopAndPrefopTest()
     {
-        string key = "qiniu.mp4";
-        bool force = true;
-        string pipeline = "sdktest";
-        string notifyUrl = "http://api.example.com/qiniu/pfop/notify";
-        string saveMp4Entry = Base64.UrlSafeBase64Encode(Bucket + ":avthumb_test_target.mp4");
-        string saveJpgEntry = Base64.UrlSafeBase64Encode(Bucket + ":vframe_test_target.jpg");
-        string avthumbMp4Fop = "avthumb/mp4|saveas/" + saveMp4Entry;
-        string vframeJpgFop = "vframe/jpg/offset/1|saveas/" + saveJpgEntry;
-        string fops = string.Join(";", new string[] { avthumbMp4Fop, vframeJpgFop });
+        var key = "qiniu.mp4";
+        var force = true;
+        var pipeline = "sdktest";
+        var notifyUrl = "http://api.example.com/qiniu/pfop/notify";
+        var saveMp4Entry = Base64.UrlSafeBase64Encode(Bucket + ":avthumb_test_target.mp4");
+        var saveJpgEntry = Base64.UrlSafeBase64Encode(Bucket + ":vframe_test_target.jpg");
+        var avthumbMp4Fop = "avthumb/mp4|saveas/" + saveMp4Entry;
+        var vframeJpgFop = "vframe/jpg/offset/1|saveas/" + saveJpgEntry;
+        var fops = string.Join(";", new string[] { avthumbMp4Fop, vframeJpgFop });
 
-        OperationManager manager = getOperationManager();
-        PfopResult pfopRet = manager.Pfop(Bucket, key, fops, pipeline, notifyUrl, force);
+        var manager = getOperationManager();
+        var pfopRet = manager.Pfop(Bucket, key, fops, pipeline, notifyUrl, force);
         if (pfopRet.Code != (int)HttpCode.OK)
         {
             Assert.Fail("pfop error: " + pfopRet.ToString());
         }
         Console.WriteLine(pfopRet.PersistentId);
 
-        PrefopResult ret = manager.Prefop(pfopRet.PersistentId);
+        var ret = manager.Prefop(pfopRet.PersistentId);
         if (ret.Code != (int)HttpCode.OK)
         {
             Assert.Fail("prefop error: " + ret.ToString());
@@ -73,10 +73,10 @@ public class OperationManagerTests : TestEnv
     [TestCaseSource(typeof(OperationManagerTests), nameof(PfopOptionsTestCases))]
     public void PfopWithOptionsTest(int type, string workflowId)
     {
-        string bucketName = Bucket;
-        string key = "qiniu.mp4";
+        var bucketName = Bucket;
+        var key = "qiniu.mp4";
 
-        StringBuilder persistentKeyBuilder = new StringBuilder("test-pfop/test-pfop-by-api");
+        var persistentKeyBuilder = new StringBuilder("test-pfop/test-pfop-by-api");
         if (type > 0)
         {
             persistentKeyBuilder.Append("type_" + type);
@@ -89,7 +89,7 @@ public class OperationManagerTests : TestEnv
         }
         else
         {
-            string saveEntry = Base64.UrlSafeBase64Encode(String.Join(
+            var saveEntry = Base64.UrlSafeBase64Encode(string.Join(
                 ":",
                 bucketName,
                 persistentKeyBuilder.ToString()
@@ -97,8 +97,8 @@ public class OperationManagerTests : TestEnv
             fops = "avinfo|saveas/" + saveEntry;
         }
 
-        OperationManager manager = getOperationManager();
-        PfopResult pfopRet = manager.Pfop(
+        var manager = getOperationManager();
+        var pfopRet = manager.Pfop(
             Bucket,
             key,
             fops,
@@ -113,25 +113,23 @@ public class OperationManagerTests : TestEnv
             Assert.Fail("pfop error: " + pfopRet);
         }
 
-        PrefopResult prefopRet = manager.Prefop(pfopRet.PersistentId);
+        var prefopRet = manager.Prefop(pfopRet.PersistentId);
         if (prefopRet.Code != (int)HttpCode.OK)
         {
             Assert.Fail("prefop error: " + prefopRet);
         }
 
-        Assert.IsNotNull(prefopRet.Result.CreationDate);
-        Assert.IsNotEmpty(prefopRet.Result.CreationDate);
+        Assert.That(prefopRet.Result.CreationDate, Is.Not.Null.And.Not.Empty);
 
         if (type == 1)
         {
-            Assert.AreEqual(1, prefopRet.Result.Type);
+            Assert.That(prefopRet.Result.Type, Is.EqualTo(1));
         }
 
         if (!string.IsNullOrEmpty(workflowId))
         {
-            Assert.IsNotNull(prefopRet.Result.TaskFrom);
-            Assert.IsNotEmpty(prefopRet.Result.TaskFrom);
-            Assert.IsTrue(prefopRet.Result.TaskFrom.Contains(workflowId));
+            Assert.That(prefopRet.Result.TaskFrom, Is.Not.Null.And.Not.Empty);
+            Assert.That(prefopRet.Result.TaskFrom.Contains(workflowId), Is.True);
         }
     }
 }
