@@ -1,11 +1,7 @@
-﻿using System;
-using System.IO;
-using System.Text;
-using System.Collections.Generic;
-using System.Threading;
-using Qiniu.Util;
+﻿using System.Text;
+
 using Qiniu.Http;
-using System.Text.Json;
+using Qiniu.Util;
 
 namespace Qiniu.Storage
 {
@@ -51,16 +47,16 @@ namespace Qiniu.Storage
         /// <param name="token">上传凭证</param>
         /// <param name="putExtra">上传可选配置</param>
         /// <returns>上传文件后的返回结果</returns>
-        public HttpResult UploadFile(string localFile, string key, string token, PutExtra putExtra)
+        public HttpResult UploadFile(String localFile, String key, String token, PutExtra? putExtra)
         {
             try
             {
-                FileStream fs = new FileStream(localFile, FileMode.Open);
-                return this.UploadStream(fs, key, token, putExtra);
+                var fs = new FileStream(localFile, FileMode.Open);
+                return UploadStream(fs, key, token, putExtra);
             }
             catch (Exception ex)
             {
-                HttpResult ret = HttpResult.InvalidFile;
+                var ret = HttpResult.InvalidFile;
                 ret.RefText = ex.Message;
                 return ret;
             }
@@ -76,15 +72,17 @@ namespace Qiniu.Storage
         /// <param name="upToken">上传凭证</param>
         /// <param name="putExtra">可选配置参数</param>
         /// <returns>上传文件后返回结果</returns>
-        public HttpResult UploadStream(Stream stream, string key, string upToken, PutExtra putExtra)
+        public HttpResult UploadStream(Stream stream, String key, String upToken, PutExtra? putExtra)
         {
-            HttpResult result = new HttpResult();
+            var result = new HttpResult();
 
             //check put extra
             if (putExtra == null)
             {
-                putExtra = new PutExtra();
-                putExtra.MaxRetryTimes = config.MaxRetryTimes;
+                putExtra = new PutExtra
+                {
+                    MaxRetryTimes = config.MaxRetryTimes
+                };
             }
             if (putExtra.ProgressHandler == null)
             {
@@ -106,7 +104,7 @@ namespace Qiniu.Storage
                 try
                 {
                     // load resume record file
-                    ResumeInfo resumeInfo = null;
+                    ResumeInfo? resumeInfo = null;
                     if (File.Exists(putExtra.ResumeRecordFile))
                     {
                         resumeInfo = ResumeHelper.Load(putExtra.ResumeRecordFile);
@@ -125,9 +123,9 @@ namespace Qiniu.Storage
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.StackTrace);
-                    StringBuilder sb = new StringBuilder();
+                    var sb = new StringBuilder();
                     sb.AppendFormat("[{0}] [ResumableUpload] Error: ", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff"));
-                    Exception e = ex;
+                    var e = ex;
                     while (e != null)
                     {
                         sb.Append(e.Message + " ");
@@ -135,7 +133,7 @@ namespace Qiniu.Storage
                     }
                     sb.AppendLine();
 
-                    result.RefCode = (int)HttpCode.USER_UNDEF;
+                    result.RefCode = (Int32)HttpCode.USER_UNDEF;
                     result.RefText += sb.ToString();
                 }
             }

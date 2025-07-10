@@ -122,20 +122,20 @@ namespace Qiniu.Storage
         /// <param name="bucket">空间名称</param>
         /// <param name="key">文件key</param>
         /// <returns>状态码为200时表示OK</returns>
-        public HttpResult Delete(string bucket, string key)
+        public HttpResult Delete(String? bucket, String key)
         {
-            HttpResult result = new HttpResult();
+            var result = new HttpResult();
 
             try
             {
-                string deleteUrl = string.Format("{0}{1}", this.config.RsHost(this.mac.AccessKey, bucket),
+                var deleteUrl = String.Format("{0}{1}", config.RsHost(this.mac.AccessKey, bucket),
                     DeleteOp(bucket, key));
 
                 result = httpManager.Post(deleteUrl, null, auth);
             }
             catch (QiniuException ex)
             {
-                StringBuilder sb = new StringBuilder();
+                var sb = new StringBuilder();
                 sb.AppendFormat("[{0}] [delete] Error:  ", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff"));
                 Exception e = ex;
                 while (e != null)
@@ -637,13 +637,13 @@ namespace Qiniu.Storage
         /// <param name="limit">数量限制</param>
         /// <param name="delimiter">分隔符</param>
         /// <returns>文件列表获取结果</returns>
-        public ListResult ListFiles(string bucket, string prefix, string marker, int limit, string delimiter)
+        public ListResult ListFiles(String? bucket, String prefix, String marker, Int32 limit, String delimiter)
         {
-            ListResult result = new ListResult();
+            var result = new ListResult();
 
             try
             {
-                StringBuilder sb = new StringBuilder("/list?bucket=" + bucket);
+                var sb = new StringBuilder("/list?bucket=" + bucket);
 
                 if (!string.IsNullOrEmpty(marker))
                 {

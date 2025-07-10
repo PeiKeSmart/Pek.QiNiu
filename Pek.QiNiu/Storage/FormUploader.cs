@@ -1,6 +1,5 @@
-﻿using System;
-using System.IO;
-using System.Text;
+﻿using System.Text;
+
 using Qiniu.Http;
 using Qiniu.Util;
 
@@ -62,10 +61,10 @@ namespace Qiniu.Storage
         /// <param name="token">上传凭证</param>
         /// <param name="extra">上传可选设置</param>
         /// <returns>上传数据后的返回结果</returns>
-        public HttpResult UploadData(byte[] data, string key, string token, PutExtra extra)
+        public HttpResult UploadData(Byte[] data, String key, String token, PutExtra? extra)
         {
-            MemoryStream stream = new MemoryStream(data);
-            return this.UploadStream(stream, key, token, extra);
+            var stream = new MemoryStream(data);
+            return UploadStream(stream, key, token, extra);
         }
 
         /// <summary>
@@ -74,16 +73,18 @@ namespace Qiniu.Storage
         /// <param name="stream">(确定长度的)数据流</param>
         /// <param name="key">要保存的key</param>
         /// <param name="token">上传凭证</param>
-        /// <param name="extra">上传可选设置</param>
+        /// <param name="putExtra">上传可选设置</param>
         /// <returns>上传数据流后的返回结果</returns>
-        public HttpResult UploadStream(Stream stream, string key, string token, PutExtra putExtra)
+        public HttpResult UploadStream(Stream stream, String key, String token, PutExtra? putExtra)
         {
             if (putExtra == null)
             {
-                putExtra = new PutExtra();
-                putExtra.MaxRetryTimes = config.MaxRetryTimes;
+                putExtra = new PutExtra
+                {
+                    MaxRetryTimes = config.MaxRetryTimes
+                };
             }
-            if (string.IsNullOrEmpty(putExtra.MimeType )) {
+            if (String.IsNullOrEmpty(putExtra.MimeType )) {
                 putExtra.MimeType = "application/octet-stream";
             }
             if (putExtra.ProgressHandler == null)
@@ -94,20 +95,20 @@ namespace Qiniu.Storage
             {
                 putExtra.UploadController = DefaultUploadController;
             }
-            string fname = key;
-            if (string.IsNullOrEmpty(key))
+            var fname = key;
+            if (String.IsNullOrEmpty(key))
             {
                 fname = "fname_temp";
             }
 
-            HttpResult result = new HttpResult();
+            var result = new HttpResult();
 
             using (stream)
             {
                 try
                 {
-                    string boundary = HttpManager.CreateFormDataBoundary();
-                    StringBuilder bodyBuilder = new StringBuilder();
+                    var boundary = HttpManager.CreateFormDataBoundary();
+                    var bodyBuilder = new StringBuilder();
                     bodyBuilder.AppendLine("--" + boundary);
 
                     if (key != null)
@@ -142,18 +143,18 @@ namespace Qiniu.Storage
                     }
 
                     //prepare data buffer
-                    int bufferSize = 1024 * 1024;
-                    byte[] buffer = new byte[bufferSize];
-                    int bytesRead = 0;
+                    var bufferSize = 1024 * 1024;
+                    var buffer = new byte[bufferSize];
+                    var bytesRead = 0;
                     putExtra.ProgressHandler(0, stream.Length);
-                    MemoryStream dataMS = new MemoryStream();
+                    var dataMS = new MemoryStream();
                     while ((bytesRead = stream.Read(buffer, 0, bufferSize)) != 0)
                     {
                         dataMS.Write(buffer, 0, bytesRead);
                     }
 
                     //write crc32
-                    uint crc32 = CRC32.CheckSumBytes(dataMS.ToArray());
+                    var crc32 = CRC32.CheckSumBytes(dataMS.ToArray());
                     //write key when it is not null
                     bodyBuilder.AppendLine("Content-Disposition: form-data; name=\"crc32\"");
                     bodyBuilder.AppendLine();
@@ -170,15 +171,15 @@ namespace Qiniu.Storage
                     bodyBuilder.AppendLine();
 
                     //write file data
-                    StringBuilder bodyEnd = new StringBuilder();
+                    var bodyEnd = new StringBuilder();
                     bodyEnd.AppendLine();
                     bodyEnd.AppendLine("--" + boundary + "--");
 
-                    byte[] partData1 = Encoding.UTF8.GetBytes(bodyBuilder.ToString());
-                    byte[] partData2 = dataMS.ToArray();
-                    byte[] partData3 = Encoding.UTF8.GetBytes(bodyEnd.ToString());
+                    var partData1 = Encoding.UTF8.GetBytes(bodyBuilder.ToString());
+                    var partData2 = dataMS.ToArray();
+                    var partData3 = Encoding.UTF8.GetBytes(bodyEnd.ToString());
 
-                    MemoryStream ms = new MemoryStream();
+                    var ms = new MemoryStream();
                     ms.Write(partData1, 0, partData1.Length);
                     ms.Write(partData2, 0, partData2.Length);
                     ms.Write(partData3, 0, partData3.Length);
@@ -203,9 +204,9 @@ namespace Qiniu.Storage
                 }
                 catch (Exception ex)
                 {
-                    StringBuilder sb = new StringBuilder();
+                    var sb = new StringBuilder();
                     sb.AppendFormat("[{0}] [FormUpload] Error: ", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff"));
-                    Exception e = ex;
+                    var e = ex;
                     while (e != null)
                     {
                         sb.Append(e.Message + " ");
@@ -215,7 +216,7 @@ namespace Qiniu.Storage
 
                     if (ex is QiniuException)
                     {
-                        QiniuException qex = (QiniuException)ex;
+                        var qex = (QiniuException)ex;
                         result.Code = qex.HttpResult.Code;
                         result.RefCode = qex.HttpResult.Code;
                         result.Text = qex.HttpResult.Text;

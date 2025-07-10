@@ -12,7 +12,7 @@ namespace Qiniu.Storage
         /// [必需]bucket或者bucket:key
         /// </summary>
         [JsonPropertyName("scope")]
-        public string Scope { get; set; }
+        public String? Scope { get; set; }
 
         /// <summary>
         /// [可选]若为 1，表示允许用户上传以 scope 的 keyPrefix 为前缀的文件。

@@ -29,9 +29,9 @@ namespace Qiniu.Storage
         /// <param name="token">上传凭证</param>
         /// <param name="extra">上传可选设置</param>
         /// <returns>上传文件后的返回结果</returns>
-        public HttpResult UploadData(byte[] data, string key, string token, PutExtra extra)
+        public HttpResult UploadData(Byte[]? data, String key, String token, PutExtra? extra)
         {
-            FormUploader formUploader = new FormUploader(this.config);
+            var formUploader = new FormUploader(config);
             return formUploader.UploadData(data, key, token, extra);
         }
 
@@ -44,19 +44,19 @@ namespace Qiniu.Storage
         /// <param name="token">上传凭证</param>
         /// <param name="extra">上传可选设置</param>
         /// <returns>上传文件后的返回结果</returns>
-        public HttpResult UploadFile(string localFile, string key, string token, PutExtra extra)
+        public HttpResult UploadFile(String localFile, String key, String token, PutExtra? extra)
         {
-            HttpResult result = new HttpResult();
+            var result = new HttpResult();
 
-            System.IO.FileInfo fi = new System.IO.FileInfo(localFile);
-            if (fi.Length > this.config.PutThreshold)
+            var fi = new System.IO.FileInfo(localFile);
+            if (fi.Length > config.PutThreshold)
             {
-                ResumableUploader resumeUploader = new ResumableUploader(config);
+                var resumeUploader = new ResumableUploader(config);
                 result = resumeUploader.UploadFile(localFile, key, token, extra);
             }
             else
             {
-                FormUploader formUploader = new FormUploader(config);
+                var formUploader = new FormUploader(config);
                 result = formUploader.UploadFile(localFile, key, token, extra);
             }
 
